@@ -1,13 +1,14 @@
 // game variables
 let min = 1,
     max = 10,
-    winningNumber = 2,
+    winningNumber = getRandomNumber(min, max),
     guessesLeft = 3;
 
 //interface elements
 const game = document.querySelector('.game'),
       guessInput = document.querySelector('input[type="number"]'),
       form = document.querySelector('form');
+      guessButton = document.querySelector('input[type="submit"]'),
       minNumberSpan = document.querySelector('#min-number'),
       maxNumberSpan = document.querySelector('#max-number'),
       message = document.querySelector('#message');
@@ -18,6 +19,13 @@ maxNumberSpan.textContent = max;
 
 //add event listener to form submit
 form.addEventListener('submit', guess);
+//add event listener to form for new game
+form.addEventListener('mousedown', function(e) {
+  if (e.target.classList.contains('new-game')) {
+    location.reload();
+  }
+})
+
 
 function guess(e) {
   e.preventDefault();
@@ -53,9 +61,17 @@ function gameOver(won, message) {
   guessInput.style.borderColor = color;
   guessInput.disabled = 'true';
 
+  //change submit button text
+  guessButton.value = 'New Game';
+  //add class to button
+  guessButton.classList.add('new-game');
 }
 
 function setMessage(msgText, msgColor) {
   message.textContent = msgText;
   message.style.color = msgColor;
+}
+
+function getRandomNumber(min, max) {
+  return Math.floor((Math.random() * (max - min + 1) + min));
 }
