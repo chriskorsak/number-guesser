@@ -32,20 +32,26 @@ function guess(e) {
 
   //pick winning number
   if (guess === winningNumber) {
-    setMessage(`You win! The correct number is ${winningNumber}!`, 'green');
-    guessInput.style.borderColor = 'green';
-    guessInput.disabled = 'true';
+    gameOver(true, `You win! The correct number is ${winningNumber}!`);
   } else {  
     //pick inccorect number  
     guessesLeft -= 1;
     if (guessesLeft === 0) {
-      guessInput.disabled = 'true';
-      setMessage(`You lose! Game over. The correct number is ${winningNumber}.`, 'red');
+      gameOver(false, `You lose! Game over. The correct number is ${winningNumber}.`);
     } else {
       setMessage(`Incorrect. You have ${guessesLeft} guesses left.`, 'red');
       guessInput.style.borderColor = 'red';
     }
   }
+}
+
+//won is a boolean val. did they win? ex. true.
+function gameOver(won, message) {
+  let color;
+  won === true ? color = 'green' : color = 'red';
+  setMessage(message, color);
+  guessInput.style.borderColor = color;
+  guessInput.disabled = 'true';
 
 }
 
@@ -53,4 +59,3 @@ function setMessage(msgText, msgColor) {
   message.textContent = msgText;
   message.style.color = msgColor;
 }
-
